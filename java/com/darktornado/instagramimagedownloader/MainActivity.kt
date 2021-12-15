@@ -3,7 +3,9 @@ package com.darktornado.instagramimagedownloader
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.*
+import java.lang.Exception
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,17 @@ class MainActivity : Activity() {
         layout.addView(txt2)
         val down = Button(this)
         down.text = "Download Image"
+        down.setOnClickListener{
+            try{
+                StrictMode.enableDefaults()
+                val url = txt2.text.toString()
+                val id = ImageDownloader(this, url)
+                id.execute()
+                toast("Image is downloaded.")
+            }catch (e: Exception){
+                toast(e.toString())
+            }
+        }
         layout.addView(down)
 
         val pad = dip2px(16)
